@@ -70,9 +70,10 @@
                 Additionally, we describe an onsite capture setup that needs no careful calibration to capture the material sample efficiently. In particular, even a cell phone can be used for illumination. We demonstrate on synthetic and real data that our method could recover a wide range of materials from a single image casually captured under the learned lighting pattern.
             </p>
             <div class="card-body" style="text-align: center;">
-                <button type="button" class="btn btn-dark" function="">Paper (High-Res. Figures)</button>
-                <button type="button" class="btn btn-dark">Paper (Low-Res. Figures)</button>
-                <button type="button" class="btn btn-dark">Supplementary</button>
+                <button type="button" class="btn btn-dark" onclick="downloadPaper()">Paper (High-Res. Figures)</button>
+                <button type="button" class="btn btn-dark" onclick="downloadLowResPaper()">Paper (Low-Res. Figures)</button>
+                <button type="button" class="btn btn-dark" onclick="downloadSupplementary()">Supplementary</button>
+                <button type="button" class="btn btn-dark" onclick="redirect()">Video</button>
                 <button type="button" class="btn btn-dark">Code (Coming soon)</button>
             </div>
         </div>
@@ -125,6 +126,44 @@
         </div>
     </div>
 
+    <script>
+        function downloadPaper() {
+            // Replace "path-to-your-pdf.pdf" with the actual path to your PDF file
+            var pdfPath = "pdfs/SinglePlane.pdf";
+            var link = document.createElement('a');
+            link.href = pdfPath;
+            link.target = "_blank";
+            link.download = "conference_paper.pdf";
+            link.click();
+        }
+        function downloadLowResPaper() {
+            // Replace "path-to-your-pdf.pdf" with the actual path to your PDF file
+            var pdfPath = "pdfs/SinglePlane-LowRes.pdf";
+            var link = document.createElement('a');
+            link.href = pdfPath;
+            link.target = "_blank";
+            link.download = "conference_paper.pdf";
+            link.click();
+        }
+        function downloadSupplementary() {
+            // Replace "path-to-your-pdf.pdf" with the actual path to your PDF file
+            var pdfPath = "pdfs/Supplementary.pdf";
+            var link = document.createElement('a');
+            link.href = pdfPath;
+            link.target = "_blank";
+            link.download = "conference_paper.pdf";
+            link.click();
+        }
+        function redirect() {
+            // Replace "path-to-your-pdf.pdf" with the actual path to your PDF file
+            var pdfPath = "https://www.bilibili.com/video/BV1jP411D77r/?vd_source=56e73508ea999857c5d2c9f253fd2c11";
+            var link = document.createElement('a');
+            link.href = pdfPath;
+            link.target = "_blank";
+            link.download = "conference_paper.pdf";
+            link.click();
+        }
+    </script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
