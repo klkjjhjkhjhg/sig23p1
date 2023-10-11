@@ -71,7 +71,7 @@
             </p>
             <div class="card-body" style="text-align: center;">
                 <button type="button" class="btn btn-dark" onclick="downloadPaper()">Paper (High-Res. Figures)</button>
-                <button type="button" class="btn btn-dark" onclick="downloadLowResPaper()">Paper (Low-Res. Figures)</button>
+                <!-- <button type="button" class="btn btn-dark" onclick="downloadLowResPaper()">Paper (Low-Res. Figures)</button> -->
                 <button type="button" class="btn btn-dark" onclick="downloadSupplementary()">Supplementary</button>
                 <button type="button" class="btn btn-dark" onclick="redirect()">Video</button>
                 <button type="button" class="btn btn-dark">Code (Coming soon)</button>
@@ -133,7 +133,7 @@
             var link = document.createElement('a');
             link.href = pdfPath;
             link.target = "_blank";
-            link.download = "SinglePlane.pdf";
+            link.download = "https://dl.acm.org/doi/10.1145/3588432.3591559";
             link.click();
         }
         function downloadLowResPaper() {
