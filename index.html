@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Deep SVBRDF Estimation from Single Image under Learned Planar Lighting</title>
+    <title>Sparse SVBRDF Acquisition via Importance-Aware Illumination Multiplexing</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
@@ -43,15 +43,12 @@
 </head>
 <body>
     <div class="header">
-        <h1>Deep SVBRDF Estimation</h1>
-        <h1>from Single Image under Learned Planar Lighting</h1>
-        <h4>SIGGRAPH’23 Conference Proceedings</h4>
+        <h1>Sparse SVBRDF Acquisition</h1>
+        <h1>via Importance-Aware Illumination Multiplexing</h1>
+        <h4>ACM Trans. on Graphics (Proc. SIGGRAPH Asia 2025).</h4>
         <h6>
-            <a href="https://klkjjhjkhjhg.github.io" target="_blank">Lianghao Zhang</a>, Fangzhou Gao,
-            <!-- <a href="" target="_blank">Fangzhou Gao</a>, Li Wang, -->
-            <a href="https://cgliwang.github.io/" target="_blank">Li Wang</a>,
-            <a href="http://cic.tju.edu.cn/faculty/yuminjing/index.html" target="_blank">Minjing Yu</a>, Jiamin Cheng,
-            <!-- <a href="" target="_blank">Jiamin Cheng</a>, -->
+            <a href="https://klkjjhjkhjhg.github.io" target="_blank">Lianghao Zhang</a>, Zixuan Wang,
+            <a href="https://cgliwang.github.io/" target="_blank">Li Wang</a>, Fangzhou Gao</a>, Ruya Sun,
             <a href="http://cic.tju.edu.cn/faculty/zhangjiawan/index.htm" target="_blank">Jiawan Zhang</a>
           </h6>
           <a href="http://cic.tju.edu.cn/" target="_blank">College of Intelligence and Computing, Tianjin University</a>
@@ -62,19 +59,18 @@
             <h2>Abstract</h2>
             <hr style="margin-top:0px">
             <p>
-                Estimating spatially varying BRDF from a single image without complicated acquisition devices is a challenging problem. In this paper, a deep learning based method was proposed to improve the capture efficiency of single image significantly by learning the lighting pattern of a planar light source, and reconstruct high-quality SVBRDF by learning the global correlation prior of the input image.  
-                In our framework, the lighting pattern optimization is embedded in the training process of the network by introducing an online rendering process.
-                The rendering process not only renders images online as the input of network, 
-                but also efficiently back propagates gradients from the network to optimize the lighting pattern.
-                Once trained, the network can estimate SVBRDFs from real photographs captured under the learned lighting pattern. 
-                Additionally, we describe an onsite capture setup that needs no careful calibration to capture the material sample efficiently. In particular, even a cell phone can be used for illumination. We demonstrate on synthetic and real data that our method could recover a wide range of materials from a single image casually captured under the learned lighting pattern.
+                Reflectance acquisition from sparse images has been a long-standing problem in computer graphics. 
+                Previous works have addressed this by introducing either material-related priors or illumination multiplexing with a general sampling strategy. 
+                However, fixed lighting patterns in multiplexing can lead to redundant sampling and entangled observations, making it necessary to adaptively capture salient reflectance responses in each shot based on material behavior. 
+                In this paper, we propose combining adaptive sampling with illumination multiplexing for SVBRDF reconstruction from sparse images lit by a planar light source. Central to our method is the modeling of a sampling importance distribution on lighting surface, guided by the statistical nature of microfacet theory. 
+                Based on this sampling structure, our framework jointly trains networks to learn an adaptive sampling strategy in the lighting domain, and furthermore, 
+                approximately separates pure specular-related information from observations to reduce ambiguities in reconstruction. We validate our approach through experiments and comparisons with previous works on both synthetic and real materials.
             </p>
             <div class="card-body" style="text-align: center;">
                 <a type="button" class="btn btn-dark" href="https://dl.acm.org/doi/10.1145/3588432.3591559">Paper (High-Res. Figures)</a>
                 <!-- <button type="button" class="btn btn-dark" onclick="downloadLowResPaper()">Paper (Low-Res. Figures)</button> -->
                 <button type="button" class="btn btn-dark" onclick="downloadSupplementary()">Supplementary</button>
                 <button type="button" class="btn btn-dark" onclick="redirect()">Video</button>
-                <button type="button" class="btn btn-dark">Code (Coming soon)</button>
             </div>
         </div>
 
@@ -84,18 +80,18 @@
                 <hr style="margin-top:0px">
                 <img class="image" src="imgs/Pipeline.png">
                 <p>
-                    Our framework reconstructs SVBRDF from a single image lit with a planar light source. When training, the rendering process takes the ground truth SVBRDF as input and renders an image online. First, the BRDF distribution is transformed into clamped cosine distribution. The rendered image is then fed to the network for reconstructing the SVBRDF. Finally, under the supervision of the ground truth, the network parameters and lighting pattern are optimized jointly.
+                    Overview of our framework (left) and capture setup (right). The framework consists of three auxiliary modules (top left) and a main pipeline (bottom left). Specifically, given the first captured image, we initialize material behaviors using existing single-image methods. Then, a sampling importance distribution within the lighting rectangle is constructed based on NDFs. Then, adaptive lighting patterns are predicted by network Gl for other input images capturing or rendering. During training, the lighting predictor is jointly trained with a BRDF predictor Gp in the first stage and then refined by the joint training with the SVBRDF predictor Gsc in the second stage. We also explicitly separate specular-related appearance to aid reconstruction. Once trained, the SVBRDF maps can be obtained using lighting predictor for capture and the SVBRDF predictor for reconstruction.
                 </p>
             </div>
         </div>
 
         <div class="card">
             <div class="card-body">
-                <h3 class="card-title">Capture Setup and Some Results</h3>    
+                <h3 class="card-title">Some Results on Real Materials</h3>    
                 <hr style="margin-top:0px">
                 <img class="image" src="imgs/Teaser.png">     
                 <p>
-                    The material sample is captured with only a camera and a RGB LCD screen and without careful calibration. Here we show two SVBRDFs reconstructed by our method from a single image lit with the learned lighting pattern.
+                    Given an image captured under a general pattern, our method predicts adaptive lighting patterns to capture the salient part of reflectance responses. As illustrated, our predicted patterns not only consider previous sampling of the general pattern, but also adapt to material behaviors to reduce redundant sampling. We show material maps of two real materials of our method and re-renderings under novel environment and point lighting.
                 </p>
             </div>
         </div>
@@ -179,7 +175,6 @@
             link.click();
         }
     </script>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
